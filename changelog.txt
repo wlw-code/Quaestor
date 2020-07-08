@@ -1,0 +1,9 @@
+0.0.1 - 09/07/2020 at 00:01
+Added:
+- Base code for notifications and connecting to Discord.
+
+Modified:
+- N/A
+
+Removed:
+- N/A
