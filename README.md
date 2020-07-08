@@ -1,4 +1,4 @@
-# Nuko
+# Quaestor
 
 A multipurpose Discord bot.
 
