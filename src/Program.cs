@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -7,14 +8,15 @@ using Discord.WebSocket;
 using Newtonsoft.Json;
 using Quaestor.Common.Extensions;
 using Quaestor.Common.Structures;
+using Quaestor.Services;
 
 namespace Quaestor
 {
     internal class Program
     {
-        static void Main() => new Program().StartAsync().GetAwaiter().GetResult();
+        private static void Main() => StartAsync().GetAwaiter().GetResult();
 
-        private async Task StartAsync()
+        private static async Task StartAsync()
         {
             var scribe = new Scribe();
 
@@ -33,21 +35,16 @@ namespace Quaestor
                 return;
             }
 
-            scribe.Inform("Credentials initialized.");
+            var commandService = new CommandService();
+            var serviceManager = new ServiceManager(new DiscordSocketClient(), commandService, credentials, scribe);
+            var serviceProvider = serviceManager.ServiceProvider;
+            var quaestorClient = new QuaestorClient(serviceProvider);
 
-            var client = new DiscordSocketClient();
+            quaestorClient.InitializeTimersAndEvents();
 
-            scribe.Inform("Client initialized.");
-
-            var commandService = new CommandService(new CommandServiceConfig
-            {
-                DefaultRunMode = RunMode.Async
-            });
-
-            scribe.Inform("CommandService initialized.");
-
-            await client.LoginAsync(TokenType.Bot, credentials.Token);
-            await client.StartAsync();
+            await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
+            await quaestorClient.LoginAsync(TokenType.Bot, credentials.Token);
+            await quaestorClient.StartAsync();
 
             await Task.Delay(-1);
         }

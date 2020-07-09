@@ -1,3 +1,18 @@
+0.0.2 - 09/07/2020 at 13:43
+Added:
+- Configuration file
+- QuaestorClient structure which combines the Discord client, Scribe and ServiceProvider into one place
+- MessageReceived event which just responds with the message content for now
+- Ready event which sets the bot's game and outputs a notification to the console
+- ServiceManager
+
+Modified:
+- Program now uses QuaestorClient
+- Program is now less noisy when starting up
+
+Removed:
+- N/A
+
 0.0.1 - 09/07/2020 at 00:01
 Added:
 - Base code for notifications and connecting to Discord.
