@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -6,6 +7,7 @@ using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Quaestor.Common;
 using Quaestor.Common.Structures;
+using Quaestor.Services;
 
 namespace Quaestor.Events
 {
@@ -14,12 +16,14 @@ namespace Quaestor.Events
         private readonly QuaestorClient _client;
         private readonly IServiceProvider _serviceProvider;
         private readonly CommandService _commandService;
+        private readonly Messenger _messenger;
 
         public MessageReceived(QuaestorClient client)
         {
             _client = client;
             _serviceProvider = client.ServiceProvider;
             _commandService = _serviceProvider.GetRequiredService<CommandService>();
+            _messenger = _serviceProvider.GetRequiredService<Messenger>();
 
             _client.MessageReceived += HandleMessageAsync;
         }
@@ -30,21 +34,36 @@ namespace Quaestor.Events
             if (message.Source != MessageSource.User) return;
 
             var argPos = 0;
+            var context = new Context(_serviceProvider, message, _client);
 
-            if (!message.HasStringPrefix(Configuration.Prefix, ref argPos)) return;
-
-            var context = new SocketCommandContext(_client, message);
-            var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
-
-            if (!result.IsSuccess)
+            if (!(message.Channel is IDMChannel))
             {
-                if (result.Error == CommandError.UnknownCommand)
+                await context.InitializeAsync();
+
+                if (!message.HasStringPrefix(context.DbGuild.Prefix, ref argPos)) return;
+                if (context.DbGuild.IgnoredChannels.Any(x => x == context.Channel.Id)) return;
+
+                var args = context.Message.Content.Split(' ');
+                var commandName = args.First().StartsWith(context.DbGuild.Prefix) ? args.First().Remove(0, context.DbGuild.Prefix.Length) : args[1];
+
+                if (context.DbGuild.DisabledCommands.Any(x => x == commandName.ToLower()))
                 {
                     return;
                 }
 
-                await context.Channel.SendMessageAsync(result.ErrorReason);
+                if (context.DbGuild.CustomCommands.Any())
+                {
+                    var customCommand = context.DbGuild.CustomCommands.SingleOrDefault(x => x.Name.ToLower() == commandName.ToLower());
+
+                    if (customCommand.Name != null)
+                    {
+                        await _messenger.SendAsync(context.Channel, customCommand.Value.AsString);
+                        return;
+                    }
+                }
             }
+
+            var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
         }
     }
 }

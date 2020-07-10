@@ -1,11 +1,15 @@
-0.0.3 - 10/07/2020 at :
+0.0.3 - 10/07/2020 at 20:10
 Added:
 - TryLoginAsync Task in QuaestorClient that attempts to login but catches incorrect token and 
 HttpRequest exceptions and throws easily understandable messages using Scribe
 - Messenger service for sending embedded messages
+- User, Guild, Mute and Base database models and repositories
+- Context which inherits SocketCommandContext but includes DbUser and DbGuild
 
 Modified:
 - Moved Scribe from Extensions to Services, not too sure what I was thinking when I first made it
+- Command handler (MessageReceived event) mostly finished, need to add error handling to it
+- ServiceManager now connects to the database
 
 Removed:
 - Unnecessary DiscordSocketClient parameter in the ServiceManager
