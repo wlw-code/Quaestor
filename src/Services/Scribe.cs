@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Quaestor.Common.Extensions
+namespace Quaestor.Services
 {
     public class Scribe
     {

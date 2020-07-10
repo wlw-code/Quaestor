@@ -2,11 +2,8 @@
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using Newtonsoft.Json;
-using Quaestor.Common.Extensions;
 using Quaestor.Common.Structures;
 using Quaestor.Services;
 
@@ -31,21 +28,20 @@ namespace Quaestor
             catch (IOException exception)
             {
                 scribe.InformOfException(
-                    "An exception occurred while loading Credentials.json (the src/Credentials.json file was not found or was not properly formatted.", exception);
+                    "An exception occurred while loading Credentials.json (the src/Credentials.json file was not found or was not properly formatted).", exception);
                 return;
             }
 
             var commandService = new CommandService();
-            var serviceManager = new ServiceManager(new DiscordSocketClient(), commandService, credentials, scribe);
+            var serviceManager = new ServiceManager(commandService, credentials, scribe);
             var serviceProvider = serviceManager.ServiceProvider;
             var quaestorClient = new QuaestorClient(serviceProvider);
 
             quaestorClient.InitializeTimersAndEvents();
 
             await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
-            await quaestorClient.LoginAsync(TokenType.Bot, credentials.Token);
+            await quaestorClient.TryLoginAsync(credentials.Token);
             await quaestorClient.StartAsync();
-
             await Task.Delay(-1);
         }
     }

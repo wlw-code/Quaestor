@@ -34,20 +34,17 @@ namespace Quaestor.Events
             if (!message.HasStringPrefix(Configuration.Prefix, ref argPos)) return;
 
             var context = new SocketCommandContext(_client, message);
+            var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
 
-            await context.Channel.SendMessageAsync(message.Content);
+            if (!result.IsSuccess)
+            {
+                if (result.Error == CommandError.UnknownCommand)
+                {
+                    return;
+                }
 
-            //var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
-
-            //if (!result.IsSuccess)
-            //{
-            //    if (result.Error == CommandError.UnknownCommand)
-            //    {
-            //        return;
-            //    }
-
-            //    await context.Channel.SendMessageAsync(result.ErrorReason);
-            //}
+                await context.Channel.SendMessageAsync(result.ErrorReason);
+            }
         }
     }
 }

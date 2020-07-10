@@ -1,3 +1,15 @@
+0.0.3 - 10/07/2020 at :
+Added:
+- TryLoginAsync Task in QuaestorClient that attempts to login but catches incorrect token and 
+HttpRequest exceptions and throws easily understandable messages using Scribe
+- Messenger service for sending embedded messages
+
+Modified:
+- Moved Scribe from Extensions to Services, not too sure what I was thinking when I first made it
+
+Removed:
+- Unnecessary DiscordSocketClient parameter in the ServiceManager
+
 0.0.2 - 09/07/2020 at 13:43
 Added:
 - Configuration file
