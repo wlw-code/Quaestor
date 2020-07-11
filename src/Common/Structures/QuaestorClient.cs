@@ -43,7 +43,8 @@ namespace Quaestor.Common.Structures
             }
             catch (HttpRequestException exception)
             {
-                Scribe.InformOfException("Unable to connect to Discord. Please check your internet connection or Discord server status.", exception);
+                Scribe.InformOfException("Unable to connect to Discord. Please check your internet connection or Discord server status.", 
+                    exception);
             }
         }
     }

@@ -29,9 +29,9 @@ namespace Quaestor.Services
             await ReplyAsync(user, channel, message, null, Configuration.ErrorColor);
         }
 
-        public async Task SendImageAsync(IMessageChannel channel, string message, string imageUrl)
+        public async Task SendImageAsync(IMessageChannel channel, string message, string imageUrl, string title = null)
         {
-            await SendAsync(channel, message, null, null, imageUrl);
+            await SendAsync(channel, message, title, null, imageUrl);
         }
     }
 }

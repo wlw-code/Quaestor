@@ -1,3 +1,15 @@
+0.0.4 - 11/07/2020 at :
+Added:
+- Who command that shows some information about a user
+- When pinged, the client will respond with the server's prefix
+- An extension to strings that makes the first character uppercase
+
+Modified:
+- Messenger.SendImageAsync now takes title parameter, defaults to null
+
+Removed:
+- 
+
 0.0.3 - 10/07/2020 at 20:10
 Added:
 - TryLoginAsync Task in QuaestorClient that attempts to login but catches incorrect token and 

@@ -40,6 +40,8 @@ namespace Quaestor.Events
             {
                 await context.InitializeAsync();
 
+                if (message.Content == $"{_client.CurrentUser.Mention}") await _messenger.SendAsync(context.Channel, $"The prefix for this server is `{context.DbGuild.Prefix}`.\nYou can view available commands with `{context.DbGuild.Prefix}help`.");
+
                 if (!message.HasStringPrefix(context.DbGuild.Prefix, ref argPos)) return;
                 if (context.DbGuild.IgnoredChannels.Any(x => x == context.Channel.Id)) return;
 

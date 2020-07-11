@@ -38,9 +38,9 @@ namespace Quaestor.Common
             await _messenger.SendAsync(userDm, message, title, color, imageUrl);
         }
 
-        public async Task SendImageAsync(string message, string imageUrl)
+        public async Task SendImageAsync(string message, string imageUrl, string title = null)
         {
-            await _messenger.SendImageAsync(Context.Channel, message, imageUrl);
+            await _messenger.SendImageAsync(Context.Channel, message, imageUrl, title);
         }
     }
 }
