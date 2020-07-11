@@ -1,3 +1,7 @@
+0.0.5 - 11/07/2020 at :
+Added:
+- RoleInfo command that shows some information about a role
+
 0.0.4 - 11/07/2020 at 15:00
 Added:
 - Who command that shows some information about a user
