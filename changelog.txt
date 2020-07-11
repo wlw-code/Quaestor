@@ -1,6 +1,17 @@
-0.0.5 - 11/07/2020 at :
+0.0.5 - 11/07/2020 at 20:06
 Added:
 - RoleInfo command that shows some information about a role
+- ServerInfo command that shows some information about the server
+- An extension to strings that makes the first character lowercase
+
+Modified:
+- Pass correct type of Context to Module
+- Rename Who command to UserInfo
+- UserInfo command now says how old the account is
+- RoleInfo command now says how old the role is
+
+Removed:
+- N/A
 
 0.0.4 - 11/07/2020 at 15:00
 Added:

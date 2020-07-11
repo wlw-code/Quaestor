@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -34,7 +35,7 @@ namespace Quaestor.Modules.General
                 permissions += "Administrator,\n";
             }
 
-            await SendAsync($"**Created at:** {role.CreatedAt.Date + role.CreatedAt.TimeOfDay}\n**Color:** {role.Color}\n**Mentionable:** {role.IsMentionable.ToString().WithUppercaseFirstCharacter()}\n**Position:** {role.Position}\n**Permissions:**\n{permissions.Remove(permissions.Length - 2)}.", $"{role.Name} ({role.Id})", role.Color.ToString() != "#0" ? role.Color : (Color?)null);
+            await SendAsync($"**Created at:** {role.CreatedAt.Date + role.CreatedAt.TimeOfDay} ({Math.Floor((DateTime.Now - role.CreatedAt).TotalDays)} days old)\n**Color:** {role.Color}\n**Mentionable:** {role.IsMentionable.ToString().WithUppercaseFirstCharacter()}\n**Position:** {role.Position}\n**Permissions:**\n{permissions.Remove(permissions.Length - 2)}.", $"{role.Name} ({role.Id})", role.Color.ToString() != "#0" ? role.Color : (Color?)null);
         }
     }
 }

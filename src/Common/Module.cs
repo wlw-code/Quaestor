@@ -7,7 +7,7 @@ using Quaestor.Services;
 
 namespace Quaestor.Common
 {
-    public abstract class Module : ModuleBase
+    public abstract class Module : ModuleBase<Context>
     {
         private readonly Messenger _messenger;
 
