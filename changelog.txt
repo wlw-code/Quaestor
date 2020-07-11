@@ -1,4 +1,4 @@
-0.0.4 - 11/07/2020 at :
+0.0.4 - 11/07/2020 at 15:00
 Added:
 - Who command that shows some information about a user
 - When pinged, the client will respond with the server's prefix
@@ -8,7 +8,7 @@ Modified:
 - Messenger.SendImageAsync now takes title parameter, defaults to null
 
 Removed:
-- 
+- N/A
 
 0.0.3 - 10/07/2020 at 20:10
 Added:
