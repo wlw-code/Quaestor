@@ -14,11 +14,12 @@ namespace Quaestor.Common
         public User DbUser { get; private set; }
         public Guild DbGuild { get; private set; }
         public IGuildUser GuildUser { get; }
+        //public DiscordSocketClient Client { get; set; }
 
         private readonly UserRepository _userRepository;
         private readonly GuildRepository _guildRepository;
 
-        public Context(IServiceProvider serviceProvider, SocketUserMessage message, DiscordSocketClient client = null) :
+        public Context(IServiceProvider serviceProvider, SocketUserMessage message, DiscordSocketClient client) :
             base(client, message)
         {
             _userRepository = serviceProvider.GetRequiredService<UserRepository>();

@@ -6,7 +6,7 @@ namespace Quaestor.Common
     public class Configuration
     {
         public static readonly string Prefix = ">",
-            Version = "0.0.5",
+            Version = "0.0.6",
             Game = $"{Prefix}help | v{Version}";
 
         public static Color GetRandomColor()

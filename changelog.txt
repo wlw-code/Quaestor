@@ -1,3 +1,14 @@
+0.0.6 - 23/07/2020 at :
+Added:
+- SetNickname command that can change the nickname of a user
+- ModerationService that can get the permission level of a user
+
+Modified:
+- MessageReceived now replies with an error message, will be fine-tuned in the future
+
+Removed:
+- N/A
+
 0.0.5 - 11/07/2020 at 20:06
 Added:
 - RoleInfo command that shows some information about a role

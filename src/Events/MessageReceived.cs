@@ -66,6 +66,11 @@ namespace Quaestor.Events
             }
 
             var result = await _commandService.ExecuteAsync(context, argPos, _serviceProvider);
+
+            if (!result.IsSuccess)
+            {
+                await _messenger.ReplyErrorAsync(context.User, context.Channel, result.ErrorReason);
+            }
         }
     }
 }

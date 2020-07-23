@@ -30,7 +30,8 @@ namespace Quaestor.Services
                 .AddSingleton(database.GetCollection<User>("users"))
                 .AddSingleton<GuildRepository>()
                 .AddSingleton<MuteRepository>()
-                .AddSingleton<UserRepository>();
+                .AddSingleton<UserRepository>()
+                .AddSingleton<ModerationService>();
 
             ServiceProvider = services.BuildServiceProvider();
         }
