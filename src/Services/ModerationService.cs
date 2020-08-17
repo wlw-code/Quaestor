@@ -23,21 +23,25 @@ namespace Quaestor.Services
 
             var permLevel = 0;
 
-            if (dbGuild.ModRoles != 0)
+            if (!dbGuild.ModRoles.Any())
             {
-                foreach (var role in dbGuild.ModRoles.OrderBy(x => x.Value))
+                if (user.GuildPermissions.Administrator) return 2;
+                return user.GuildPermissions.ManageGuild ? 1 : permLevel;
+            }
+
+            foreach (var role in dbGuild.ModRoles.OrderBy(x => x.Value))
+            {
+                if (user.Guild.GetRole(ulong.Parse(role.Name)) == null) continue;
+                
+                if (user.RoleIds.Any(x => x.ToString() == role.Name))
                 {
-                    if (user.Guild.GetRole(ulong.Parse(role.Name)) != null)
-                    {
-                        if (user.RoleIds.Any(x => x.ToString() == role.Name))
-                        {
-                            permLevel = role.Value.AsInt32;
-                        }
-                    }
+                    permLevel = role.Value.AsInt32;
                 }
             }
 
-            return user.GuildPermissions.Administrator && permLevel < 2 ? 2 : permLevel;
+            //return user.GuildPermissions.Administrator && permLevel < 2 ? 2 : permLevel;
+            //return permLevel;
+            return user.GuildPermissions.Administrator ? 2 : user.GuildPermissions.ManageGuild ? 1 : permLevel;
         }
     }
 }

@@ -27,8 +27,7 @@ namespace Quaestor.Modules.General
                             _ => "an owner"
                         };
 
-                        await ReplyErrorAsync(
-                            $"**{user.Mention}** is {position}, so you cannot change their nickname.");
+                        await ReplyErrorAsync($"**{user.Mention}** is {position}, so you cannot change their nickname.");
                         return;
                     }
                 }

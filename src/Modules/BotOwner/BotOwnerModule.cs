@@ -4,21 +4,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Quaestor.Common;
 using Quaestor.Services;
 
-namespace Quaestor.Modules.General
+namespace Quaestor.Modules.BotOwner
 {
-    [Name("General")]
-    [Summary("General commands that all users may access.")]
+    [Name("BotOwner")]
+    [Summary("Commands that only the owners of this bot can use.")]
     [RequireContext(ContextType.Guild)]
-    public partial class GeneralModule : Module
+    public partial class BotOwnerModule : Module
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly CommandService _commandService;
         private readonly ModerationService _moderationService;
 
-        public GeneralModule(IServiceProvider serviceProvider) : base(serviceProvider)
+        public BotOwnerModule(IServiceProvider serviceProvider) : base(serviceProvider)
         {
             _serviceProvider = serviceProvider;
-            _commandService = _serviceProvider.GetRequiredService<CommandService>();
             _moderationService = _serviceProvider.GetRequiredService<ModerationService>();
         }
     }
